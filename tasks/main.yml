@@ -1,0 +1,36 @@
+---
+- name: add PPA
+  apt_repository: repo="ppa:ondrej/php5" state=present update_cache=true
+
+- name: ensure PHP installed
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - php5-fpm
+    - php5-dev
+    - php5-cli
+    - php5-json
+    - php5-curl
+    - php5-intl
+    - php5-pgsql
+    - php5-sqlite
+    - php5-gd
+    - php5-mcrypt
+    - php5-xdebug
+    - php5-memcached
+
+- name: install composer
+  get_url: url=https://getcomposer.org/composer.phar dest=/usr/local/bin/composer mode=0755 validate_certs=no
+
+- name: update composer
+  command: /usr/local/bin/composer self-update
+
+- name: copy pool configuration
+  template: src=www.conf.j2 dest=/etc/php5/fpm/pool.d/
+  notify:
+    - restart php-fpm
+
+- name: copy php configuration for cli
+  template: src=php_cli.ini.j2 dest=/etc/php5/cli/php.ini
+
+- name: copy php configuration for fpm
+  template: src=php_fpm.ini.j2 dest=/etc/php5/fpm/php.ini

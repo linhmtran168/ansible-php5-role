@@ -1,0 +1,14 @@
+---
+php5_display_errors: "On"
+php5_display_startup_errors: "Off"
+php5_memory_limit: "256M"
+php5_max_execution_time: "60"
+php5_realpath_cache_size: "32K"
+php5_upload_max_file_size: "64M"
+php5_post_max_size: "32M"
+php5_date_timezone: "UTC"
+php5_pm_max_children: 100
+php5_pm_start_servers: 2
+php5_pm_min_spare_servers: 2
+php5_pm_max_spare_servers: 4
+php5_pm_max_requests: 500
